@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import GoalItem from './GoalItem';
 
 export default function GoalList(props) {
@@ -19,13 +19,19 @@ export default function GoalList(props) {
     props.startAddGoalHandler()
   }
 
+
   return (
     <View style={styles.goalsContainer}>
-      <FlatList
-        data={props.courseGoals}
-        renderItem={(itemData) => <GoalItem handleEdit={handleEdit} handleDelete={handleDelete} itemData={itemData}/>}>
-        keyExtractor={(item, index) => item.id}
-      </FlatList>
+      {props.courseGoals.length === 0 ? (
+        <Text style={styles.noDataText}>There are no goals added</Text>
+      ) : (
+        <FlatList
+          data={props.courseGoals}
+          renderItem={(itemData) => <GoalItem handleEdit={handleEdit} handleDelete={handleDelete}
+                                              itemData={itemData}/>}>
+          keyExtractor={(item, index) => item.id}
+        </FlatList>
+      )}
     </View>
   )
 }
@@ -36,4 +42,10 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginTop: 8,
   },
+  noDataText: {
+    fontSize: 22,
+    textAlign: 'center',
+    color: 'white',
+    marginTop:100
+  }
 })
